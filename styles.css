@@ -215,3 +215,73 @@ p{
 .info-txt{
     width: 50%;
 }
+.products{
+    padding: 0 0 50px 0;
+    text-align: center;
+}
+
+.box-container{
+    margin-top:55px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px, 1fr));
+    gap: 20px;
+
+}
+
+.box{
+    border-top: 2px solid #ff9000;
+    padding: 20px;
+    border-radius: 15px;
+    z-index: 1000;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+.box:nth-child(1),
+.box:nth-child(2),
+.box:nth-child(3),
+.box:nth-child(4){
+    display: inline-block;
+
+}
+.box img{
+    width: 120px;
+}
+.products-txt{
+    font-size: 20px;
+    color: #1d1d1b;
+    margin-bottom: 10px;
+
+}
+.products-txt{
+    margin-bottom: 25px;
+
+}
+.precio{
+    font-size:15px;
+    color: #ff9000;
+}
+.btn-2{
+    background-color: #ff9000;
+    margin-top: 50px;
+    display: inline-block;
+    padding: 13px 35px;
+    border-radius: 25px;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+}
+.btn-2:hover{
+    background-color: #ef8700;
+}
+.btn-3{
+    display: inline-block;
+    padding: 5px 25px;
+    background-color: #ff9000;
+    color: #ffffff;
+    border-radius: 10px;
+}
+.btn-3:hover{
+    background-color: #ef8700;
+}
