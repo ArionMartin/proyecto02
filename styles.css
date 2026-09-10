@@ -299,3 +299,32 @@ p{
 .descarga img{
     width: 150px;
 }
+.app-img{
+    width: 50%;
+    text-align: center;
+
+}
+.app-img img{
+    width: 450px;
+}
+.footer{
+    padding: 50px 0;
+    background-color: #ff9000;
+
+}
+.footer-content{
+    display: flex;
+    justify-content: space-between;
+}
+.link h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #ffffff;
+
+}
+.link a{
+    color: #ffffff;
+    font-size: 16px;
+    display: block;
+    margin-bottom: 10px;
+}
