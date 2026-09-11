@@ -1,6 +1,6 @@
-let loadMoreBtn = document.querySelector("#load-more");
+let loadMoreBtn = document.querySelector('#load-more');
 let currentItem =4;
-loadMoreBtn.onclick = () =>{
+loadMoreBtn.onclick = () => {
     let boxes = [...document.querySelectorAll('.box-container .box')];
     for(var i = currentItem; i< currentItem + 4; i++){
         boxes[i].style.display = 'inline-block';
@@ -16,7 +16,7 @@ loadMoreBtn.onclick = () =>{
 const carrito = document.getElementById('carrito');
 const elementos1 = document.getElementById('lista-1');
 const lista = document.querySelector('#lista-carrito tbody');
-const vaciarCarritoBtn = document-getElementById('vaciar-carrito');
+const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
 
 cargarEventListener();
 
@@ -62,9 +62,27 @@ function insertarCarrito(elemento){
         </td>
 
         <td>
-            <a herf = "#" class ="borrar"  data-id="${elemento.id0}" > X </a>
+            <a herf = "#" class ="borrar"  data-id="${elemento.id0}" >X</a>
         </td>
     `;
 
     lista.appendChild(row);
+}
+function eliminarElemento(e){
+    e.preventDefault();
+    let elemento,
+        elementoId;
+    if(e.target.classList.contains('borrar')){
+        e.target.parentElement.parentElement.revome();
+        elemento = e.target.parentElement.parentElement;
+        elementoId = elemento.querySelector('a').getAttribute('data-id');
+    }
+}
+
+function vaciarCarrito(){
+    while(lista.firstChild){
+        lista.removeChild(lista.firstChild);
+        
+    }
+    return false;
 }
