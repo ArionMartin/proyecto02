@@ -23,4 +23,48 @@ cargarEventListener();
 function cargarEventListener(){
     elementos1.addEventListener('click', comprarElemento);
     carrito.addEventListener('click', eliminarElemento);
+    vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+
+}
+function comprarElemento(e) {
+    e.preventDefault();
+    if(e.target.classList.contains('agregar-carrito')){
+        const elemento = e.target.parentElement.parentElement;
+        leerDatosElemento(elemento);
+
+    }
+    
+}
+
+function leerDatosElemento(elemento){
+    const infoElemento = {
+        imagen: elemento.querySelector('img').src,
+        titulo: elemento.querySelector('h3').textContent,
+        precio: elemento.querySelector('.precio').textContent,
+        id: elemento.querySelector('a').getAttribute('data-id')
+
+    }
+    insertarCarrito(infoElemento)
+}
+function insertarCarrito(elemento){
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>
+            <img src ="${elemento.imagen}" width=100 />
+        </td>
+
+        <td>
+            ${elemento.titulo}
+        </td>
+
+        <td>
+            ${elemento.precio}
+        </td>
+
+        <td>
+            <a herf = "#" class ="borrar"  data-id="${elemento.id0}" > X </a>
+        </td>
+    `;
+
+    lista.appendChild(row);
 }
