@@ -572,3 +572,176 @@ html {
 .navbar ul li a:hover {
   color: #ff9000;
 }
+
+/* PIE DE PÁGINA */
+
+.footer {
+  padding: 50px 0 20px;
+  background-color: #ff9000;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.footer .link h3 {
+  color: #ffffff;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.footer .link a {
+  color: #ffffff;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+.footer .link a:hover {
+  color: #1d1d1b;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  margin-top: 40px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: #ffffff;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+}
+
+/* BOTÓN FINALIZAR PEDIDO */
+#vaciar-carrito,
+#finalizar-pedido {
+  width: 180px;
+  min-height: 45px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+#finalizar-pedido {
+  border: none;
+  cursor: pointer;
+}
+/* VENTANA DE PEDIDO */
+.modal-pedido {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-pedido[hidden],
+#campo-direccion[hidden] {
+  display: none;
+}
+
+.modal-contenido {
+  background: white;
+  border-radius: 18px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-contenido h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.cerrar-modal {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#formulario-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#formulario-pedido label {
+  font-weight: 600;
+}
+
+#formulario-pedido input,
+#formulario-pedido select,
+#formulario-pedido textarea {
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font-family: inherit;
+  width: 100%;
+}
+
+#resumen-pedido {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #1d1d1b;
+}
+
+#formulario-pedido button[type="submit"] {
+  background: #ff9000;
+  border: none;
+  padding: 13px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#formulario-pedido button[type="submit"]:hover {
+  background: #b85c00;
+}
+
+/* BOTÓN VOLVER AL RESTAURANTE */
+
+.btn-volver {
+  background-color: #ffffff;
+  color: #ff9000;
+  border: 2px solid #ff9000;
+  border-radius: 10px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+  background-color: #ff9000;
+  color: #ffffff;
+}

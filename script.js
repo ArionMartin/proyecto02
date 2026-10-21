@@ -274,3 +274,134 @@ function modificarProducto(e) {
 
   actualizarCarrito();
 }
+
+// CONFIGURACIÓN DEL RESTAURANTE
+// Sustituye por tu número real, incluyendo código de país.
+// Ejemplo para Chile: 56912345678
+const whatsappRestaurante = "56979740324";
+
+// ELEMENTOS DEL PEDIDO
+const modalPedido = document.getElementById("modal-pedido");
+const botonFinalizar = document.getElementById("finalizar-pedido");
+const botonCerrar = document.getElementById("cerrar-pedido");
+const formularioPedido = document.getElementById("formulario-pedido");
+const tipoEntrega = document.getElementById("tipo-entrega");
+const campoDireccion = document.getElementById("campo-direccion");
+const direccionPedido = document.getElementById("cliente-direccion");
+
+// ABRIR FORMULARIO
+botonFinalizar.addEventListener("click", () => {
+  if (productosCarrito.length === 0) {
+    alert("Primero agrega productos al carrito.");
+    return;
+  }
+
+  const total = productosCarrito.reduce(
+    (suma, producto) => suma + producto.precio * producto.cantidad,
+    0,
+  );
+
+  document.getElementById("resumen-pedido").textContent =
+    "Total del pedido: $" + total.toLocaleString("es-CL");
+
+  modalPedido.hidden = false;
+});
+
+// CERRAR FORMULARIO
+botonCerrar.addEventListener("click", () => {
+  modalPedido.hidden = true;
+});
+
+// MOSTRAR DIRECCIÓN SEGÚN ENTREGA
+tipoEntrega.addEventListener("change", () => {
+  const domicilio = tipoEntrega.value === "Entrega a domicilio";
+
+  campoDireccion.hidden = !domicilio;
+  direccionPedido.required = domicilio;
+
+  if (!domicilio) {
+    direccionPedido.value = "";
+  }
+});
+
+// ENVIAR PEDIDO
+formularioPedido.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (productosCarrito.length === 0) {
+    alert("Tu carrito está vacío.");
+    return;
+  }
+
+  if (!/^\d{8,15}$/.test(whatsappRestaurante)) {
+    alert("Configura primero el WhatsApp del restaurante en script.js");
+    return;
+  }
+
+  const nombre = document.getElementById("cliente-nombre").value.trim();
+  const telefono = document.getElementById("cliente-telefono").value.trim();
+  const entrega = tipoEntrega.value;
+  const direccion = direccionPedido.value.trim();
+  const notas = document.getElementById("pedido-notas").value.trim();
+
+  let mensaje = "*NUEVO PEDIDO - RESTAURANTE*\n\n";
+  mensaje += "*Cliente:* " + nombre + "\n";
+  mensaje += "*Teléfono:* " + telefono + "\n";
+  mensaje += "*Entrega:* " + entrega + "\n";
+
+  if (entrega === "Entrega a domicilio") {
+    mensaje += "*Dirección:* " + direccion + "\n";
+  }
+
+  mensaje += "\n*PRODUCTOS*\n";
+
+  let total = 0;
+
+  productosCarrito.forEach((producto) => {
+    const subtotal = producto.precio * producto.cantidad;
+    total += subtotal;
+
+    mensaje += `${producto.cantidad} x ${producto.nombre}`;
+    mensaje += ` - $${subtotal.toLocaleString("es-CL")}\n`;
+  });
+
+  mensaje += `\n*TOTAL: $${total.toLocaleString("es-CL")}*`;
+
+  if (notas) {
+    mensaje += "\n\n*Indicaciones:* " + notas;
+  }
+
+  mensaje += "\n\nPor favor, confirmar disponibilidad y precio final.";
+
+  const url =
+    "https://wa.me/" +
+    whatsappRestaurante +
+    "?text=" +
+    encodeURIComponent(mensaje);
+
+  window.open(url, "_blank", "noopener,noreferrer");
+});
+
+// VOLVER AL RESTAURANTE
+const botonVolver = document.getElementById("volver-restaurante");
+
+function cerrarFormularioPedido() {
+  modalPedido.hidden = true;
+}
+
+// Cerrar con el botón Volver
+botonVolver.addEventListener("click", cerrarFormularioPedido);
+
+// Cerrar haciendo clic fuera del formulario
+modalPedido.addEventListener("click", (e) => {
+  if (e.target === modalPedido) {
+    cerrarFormularioPedido();
+  }
+});
+
+// Cerrar presionando Escape
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !modalPedido.hidden) {
+    cerrarFormularioPedido();
+  }
+});
