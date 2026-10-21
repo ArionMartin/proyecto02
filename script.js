@@ -133,6 +133,18 @@ function modificarCarrito(e) {
 // MOSTRAR CARRITO Y CALCULAR TOTAL
 function actualizarCarrito() {
   lista.innerHTML = "";
+  // Mostrar mensaje cuando el carrito esté vacío
+  if (productosCarrito.length === 0) {
+    const fila = document.createElement("tr");
+
+    fila.innerHTML = `
+        <td colspan="6" class="carrito-vacio">
+            Tu carrito está vacío. ¡Agrega tus platos favoritos!
+        </td>
+    `;
+
+    lista.appendChild(fila);
+  }
 
   let total = 0;
 
@@ -235,6 +247,12 @@ function actualizarCarrito() {
 
   // Guardar carrito
   localStorage.setItem("carrito", JSON.stringify(productosCarrito));
+
+  const btnFinalizar = document.getElementById("finalizar-pedido");
+
+  if (btnFinalizar) {
+    btnFinalizar.disabled = productosCarrito.length === 0;
+  }
 }
 
 // VACIAR CARRITO

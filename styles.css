@@ -626,7 +626,15 @@ html {
 }
 
 /* BOTÓN FINALIZAR PEDIDO */
+
 #vaciar-carrito,
+#finalizar-pedido {
+  margin-right: 10px;
+}
+
+#finalizar-pedido {
+  margin-right: 0;
+}
 #finalizar-pedido {
   width: 180px;
   min-height: 45px;
@@ -744,4 +752,59 @@ html {
 .btn-volver:hover {
   background-color: #ff9000;
   color: #ffffff;
+}
+.carrito-vacio {
+  text-align: center;
+  padding: 25px 10px !important;
+  color: white;
+  font-size: 15px;
+}
+
+#finalizar-pedido:disabled {
+  background-color: #999999;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* BOTONES DEL CARRITO - MISMO TAMAÑO */
+
+#vaciar-carrito,
+#finalizar-pedido {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 190px;
+  height: 45px;
+
+  padding: 0 12px;
+  margin: 0;
+
+  background-color: #ff9000;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 10px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+
+  white-space: nowrap;
+  box-sizing: border-box;
+
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Separación entre botones */
+#vaciar-carrito {
+  margin-right: 10px;
+}
+
+/* Efecto al pasar el mouse */
+#vaciar-carrito:hover,
+#finalizar-pedido:hover {
+  background-color: #b85c00;
 }
