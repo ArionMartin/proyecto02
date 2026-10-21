@@ -550,3 +550,25 @@ p {
 html {
   scroll-behavior: smooth;
 }
+
+/* Navegación suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Espacio al navegar entre secciones */
+#inicio,
+#servicios,
+#productos,
+#contacto {
+  scroll-margin-top: 80px;
+}
+
+/* Efecto visual del menú */
+.navbar ul li a {
+  transition: color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  color: #ff9000;
+}

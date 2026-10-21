@@ -1,21 +1,42 @@
-// BOTÓN CARGAR MÁS
+// BOTÓN CARGAR MÁS Y CARGAR MENOS
+
 const loadMoreBtn = document.querySelector("#load-more");
+
 let currentItem = 4;
+const cantidadInicial = 4;
+const cantidadPorCarga = 4;
 
 if (loadMoreBtn) {
-  loadMoreBtn.onclick = () => {
-    const boxes = document.querySelectorAll(".box-container .box");
+  const boxes = document.querySelectorAll(".box-container .box");
 
-    for (let i = currentItem; i < currentItem + 4 && i < boxes.length; i++) {
-      boxes[i].style.display = "inline-block";
-    }
-
-    currentItem += 4;
-
+  loadMoreBtn.addEventListener("click", () => {
+    // Si todos los productos están visibles, recogerlos
     if (currentItem >= boxes.length) {
-      loadMoreBtn.style.display = "none";
+      for (let i = cantidadInicial; i < boxes.length; i++) {
+        boxes[i].style.display = "none";
+      }
+
+      currentItem = cantidadInicial;
+
+      loadMoreBtn.textContent = "Cargar Más";
+    } else {
+      // Mostrar cuatro productos adicionales
+      for (
+        let i = currentItem;
+        i < currentItem + cantidadPorCarga && i < boxes.length;
+        i++
+      ) {
+        boxes[i].style.display = "inline-block";
+      }
+
+      currentItem = Math.min(currentItem + cantidadPorCarga, boxes.length);
+
+      // Cambiar texto al mostrar todos los productos
+      if (currentItem >= boxes.length) {
+        loadMoreBtn.textContent = "Cargar Menos";
+      }
     }
-  };
+  });
 }
 
 // CARRITO DE COMPRAS
