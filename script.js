@@ -343,7 +343,8 @@ tipoEntrega.addEventListener("change", () => {
 });
 
 // ENVIAR PEDIDO
-formularioPedido.addEventListener("submit", (e) => {
+
+formularioPedido.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   if (productosCarrito.length === 0) {
@@ -351,53 +352,77 @@ formularioPedido.addEventListener("submit", (e) => {
     return;
   }
 
-  if (!/^\d{8,15}$/.test(whatsappRestaurante)) {
-    alert("Configura primero el WhatsApp del restaurante en script.js");
-    return;
-  }
+  const botonEnviar = formularioPedido.querySelector('button[type="submit"]');
+
+  if (botonEnviar.disabled) return;
 
   const nombre = document.getElementById("cliente-nombre").value.trim();
   const telefono = document.getElementById("cliente-telefono").value.trim();
-  const entrega = tipoEntrega.value;
-  const direccion = direccionPedido.value.trim();
-  const notas = document.getElementById("pedido-notas").value.trim();
+  const entrega = document.getElementById("tipo-entrega").value;
+  const direccion = document.getElementById("cliente-direccion").value.trim();
+  const indicaciones = document.getElementById("pedido-notas").value.trim();
 
-  let mensaje = "*NUEVO PEDIDO - RESTAURANTE*\n\n";
-  mensaje += "*Cliente:* " + nombre + "\n";
-  mensaje += "*Teléfono:* " + telefono + "\n";
-  mensaje += "*Entrega:* " + entrega + "\n";
+  const pedido = {
+    nombre,
+    telefono,
+    tipo_entrega: entrega,
+    direccion,
+    indicaciones,
+    productos: productosCarrito.map((producto) => ({
+      id: Number(producto.id),
+      cantidad: Number(producto.cantidad),
+    })),
+  };
 
-  if (entrega === "Entrega a domicilio") {
-    mensaje += "*Dirección:* " + direccion + "\n";
+  botonEnviar.disabled = true;
+  botonEnviar.textContent = "Registrando pedido...";
+
+  try {
+    const respuesta = await fetch("/api/pedidos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(pedido),
+    });
+
+    const resultado = await respuesta.json();
+
+    if (!respuesta.ok) {
+      throw new Error(resultado.error || "No se pudo registrar el pedido");
+    }
+
+    const numeroPedido = resultado.pedido.id;
+
+    alert(
+      `¡Pedido #${numeroPedido} registrado correctamente!\n` +
+        "El restaurante debe confirmar tu pedido.",
+    );
+
+    // Limpiar carrito
+    productosCarrito = [];
+    actualizarCarrito();
+
+    // Cerrar formulario
+    modalPedido.hidden = true;
+
+    // Limpiar formulario
+    formularioPedido.reset();
+    campoDireccion.hidden = true;
+    direccionPedido.required = false;
+  } catch (error) {
+    console.error("Error al registrar pedido:", error);
+
+    alert(
+      "No se pudo confirmar el registro del pedido. " +
+        "Consulta con el restaurante antes de volver a enviarlo. " +
+        "Detalle: " +
+        error.message,
+    );
+  } finally {
+    botonEnviar.disabled = false;
+    botonEnviar.textContent = "Confirmar pedido";
   }
-
-  mensaje += "\n*PRODUCTOS*\n";
-
-  let total = 0;
-
-  productosCarrito.forEach((producto) => {
-    const subtotal = producto.precio * producto.cantidad;
-    total += subtotal;
-
-    mensaje += `${producto.cantidad} x ${producto.nombre}`;
-    mensaje += ` - $${subtotal.toLocaleString("es-CL")}\n`;
-  });
-
-  mensaje += `\n*TOTAL: $${total.toLocaleString("es-CL")}*`;
-
-  if (notas) {
-    mensaje += "\n\n*Indicaciones:* " + notas;
-  }
-
-  mensaje += "\n\nPor favor, confirmar disponibilidad y precio final.";
-
-  const url =
-    "https://wa.me/" +
-    whatsappRestaurante +
-    "?text=" +
-    encodeURIComponent(mensaje);
-
-  window.open(url, "_blank", "noopener,noreferrer");
 });
 
 // VOLVER AL RESTAURANTE
